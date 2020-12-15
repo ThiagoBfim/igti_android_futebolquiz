@@ -2,6 +2,7 @@ package br.com.igti.android.futebolquiz;
 
 import android.animation.Animator;
 import android.app.Activity;
+import android.content.Context;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v7.widget.CardView;
@@ -39,22 +40,20 @@ public class FutebolQuizActivity extends Activity {
     private View.OnClickListener mBotaoVerdadeListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            checaResposta(true);
+            checaResposta(true, v.getContext());
             mIndiceAtual = (mIndiceAtual + 1) % mPerguntas.length;
             atualizaQuestao();
             revelaCard();
-            new AudioPlayer().play(v.getContext(), R.raw.cashregister);
         }
     };
 
     private View.OnClickListener mBotaoFalsoListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            checaResposta(false);
+            checaResposta(false, v.getContext());
             mIndiceAtual = (mIndiceAtual + 1) % mPerguntas.length;
             atualizaQuestao();
             revelaCard();
-            new AudioPlayer().play(v.getContext(), R.raw.buzzer);
         }
     };
 
@@ -77,14 +76,16 @@ public class FutebolQuizActivity extends Activity {
         animator.start();
     }
 
-    private void checaResposta(boolean botaoPressionado) {
+    private void checaResposta(boolean botaoPressionado, Context context) {
         boolean resposta = mPerguntas[mIndiceAtual].isQuestaoVerdadeira();
 
         int recursoRespostaId = 0;
 
         if (botaoPressionado == resposta) {
+            new AudioPlayer().play(context, R.raw.cashregister);
             recursoRespostaId = R.string.toast_acertou;
         } else {
+            new AudioPlayer().play(context, R.raw.buzzer);
             recursoRespostaId = R.string.toast_errou;
         }
 
