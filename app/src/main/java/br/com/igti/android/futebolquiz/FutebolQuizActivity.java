@@ -31,9 +31,9 @@ public class FutebolQuizActivity extends Activity {
     private int mIndiceAtual = 0;
 
     private Pergunta[] mPerguntas = new Pergunta[]{
-            new Pergunta(R.string.cardview_conteudo_joinville,true),
-            new Pergunta(R.string.cardview_conteudo_cruzeiro,false),
-            new Pergunta(R.string.cardview_conteudo_gremio,false)
+            new Pergunta(R.string.cardview_conteudo_joinville, true),
+            new Pergunta(R.string.cardview_conteudo_cruzeiro, false),
+            new Pergunta(R.string.cardview_conteudo_gremio, false)
     };
 
     private View.OnClickListener mBotaoVerdadeListener = new View.OnClickListener() {
@@ -43,6 +43,7 @@ public class FutebolQuizActivity extends Activity {
             mIndiceAtual = (mIndiceAtual + 1) % mPerguntas.length;
             atualizaQuestao();
             revelaCard();
+            new AudioPlayer().play(v.getContext(), R.raw.cashregister);
         }
     };
 
@@ -53,6 +54,7 @@ public class FutebolQuizActivity extends Activity {
             mIndiceAtual = (mIndiceAtual + 1) % mPerguntas.length;
             atualizaQuestao();
             revelaCard();
+            new AudioPlayer().play(v.getContext(), R.raw.buzzer);
         }
     };
 
@@ -90,18 +92,17 @@ public class FutebolQuizActivity extends Activity {
     }
 
 
-
     @Override
     protected void onResume() {
         super.onResume();
-        Log.d(TAG,"onResume()");
+        Log.d(TAG, "onResume()");
 
-        boolean primeiraVez = PreferenceManager.getDefaultSharedPreferences(getApplicationContext()).getBoolean(PREF_PRIMEIRA_VEZ,true);
+        boolean primeiraVez = PreferenceManager.getDefaultSharedPreferences(getApplicationContext()).getBoolean(PREF_PRIMEIRA_VEZ, true);
 
         if (primeiraVez) {
             PreferenceManager.getDefaultSharedPreferences(getApplicationContext())
                     .edit()
-                    .putBoolean(PREF_PRIMEIRA_VEZ,false)
+                    .putBoolean(PREF_PRIMEIRA_VEZ, false)
                     .commit();
             Toast.makeText(this, "Bem-vindo ao FutebolQuiz!", Toast.LENGTH_SHORT).show();
         }
@@ -111,8 +112,8 @@ public class FutebolQuizActivity extends Activity {
     @Override
     protected void onSaveInstanceState(Bundle savedInstanceState) {
         super.onSaveInstanceState(savedInstanceState);
-        Log.i(TAG,"onSavedInstanceState");
-        savedInstanceState.putInt(KEY_INDICE,mIndiceAtual);
+        Log.i(TAG, "onSavedInstanceState");
+        savedInstanceState.putInt(KEY_INDICE, mIndiceAtual);
     }
 
     @Override
@@ -121,44 +122,44 @@ public class FutebolQuizActivity extends Activity {
         setContentView(R.layout.activity_futebol_quiz);
 
         if (savedInstanceState != null) {
-            mIndiceAtual = savedInstanceState.getInt(KEY_INDICE,0);
+            mIndiceAtual = savedInstanceState.getInt(KEY_INDICE, 0);
         }
 
-        mBotaoVerdade = (Button)findViewById(R.id.botaoVerdade);
+        mBotaoVerdade = (Button) findViewById(R.id.botaoVerdade);
         mBotaoVerdade.setOnClickListener(mBotaoVerdadeListener);
-        mBotaoFalso = (Button)findViewById(R.id.botaoFalso);
+        mBotaoFalso = (Button) findViewById(R.id.botaoFalso);
         mBotaoFalso.setOnClickListener(mBotaoFalsoListener);
 
-        mConteudoCard = (TextView)findViewById(R.id.cardviewConteudo);
+        mConteudoCard = (TextView) findViewById(R.id.cardviewConteudo);
         atualizaQuestao();
 
-        mCardView = (CardView)findViewById(R.id.cardview);
+        mCardView = (CardView) findViewById(R.id.cardview);
 
-        Log.d(TAG,"onCreate()");
+        Log.d(TAG, "onCreate()");
     }
 
     @Override
     protected void onStart() {
         super.onStart();
-        Log.d(TAG,"onStart()");
+        Log.d(TAG, "onStart()");
     }
 
     @Override
     protected void onPause() {
         super.onPause();
-        Log.d(TAG,"onPause()");
+        Log.d(TAG, "onPause()");
     }
 
     @Override
     protected void onStop() {
         super.onStop();
-        Log.d(TAG,"onStop()");
+        Log.d(TAG, "onStop()");
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        Log.d(TAG,"onDestroy()");
+        Log.d(TAG, "onDestroy()");
     }
 
     @Override

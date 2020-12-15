@@ -7,7 +7,7 @@ public class AudioPlayer {
     private MediaPlayer mPlayer;
 
     public void stop() {
-        if(mPlayer !=null) {
+        if (mPlayer != null) {
             mPlayer.release();
             mPlayer = null;
         }
